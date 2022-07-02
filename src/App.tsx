@@ -34,13 +34,13 @@ const App: React.FC = () => {
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-				<Route path='/' element={<Layout />}>
+				<Route path='/shop-app' element={<Layout />}>
 					<Route index element={<Main goods={goods} />}/>
 					<Route path='orders' element={<Orders />}/>
 				</Route>
 				<Route
 					path="*"
-					element={<Navigate to="/" replace />}
+					element={<Navigate to="/shop-app" replace />}
 				/>
         </Routes>
       </BrowserRouter>

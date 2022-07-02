@@ -10,16 +10,16 @@ const Layout: React.FC = () => {
 			<AppBar position='static'>
 				<Toolbar>
 					<Typography variant='h5' sx={{flexGrow: 1}}>
-						<Link to='/'>
+						<Link to='/shop-app'>
 							Shop
 						</Link>
 					</Typography>
-					<IconButton color='inherit'>
-						<Link to='orders'>
+					<Link to='orders'>
+						<IconButton color='inherit'>
 							<ShoppingCart />
 							<OrderCount />
-						</Link>
-					</IconButton>
+						</IconButton>
+					</Link>
 				</Toolbar>
 			</AppBar>
 
