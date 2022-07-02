@@ -12,21 +12,13 @@ const initialState: ordersState = {
 	totalPrice: 0
 };
 
-const searchOrder = (state: ordersState, id: string, isAdd: boolean) => {
-	const {list} = state;
-	const idProperty = isAdd ? 'ID' : 'id';
-	for (let i = 0; i < list.length; i++)
-		if (list[i][idProperty] === id) return list[i];
-	return false;
-}
-
 const ordersReducer = createSlice({
 	name: 'orders',
 	initialState,
 	reducers: {
 		addOrder(state: ordersState, action: PayloadAction<IGood>) {
 			const payload = {...action.payload as IOrder};
-			const order = searchOrder(state, payload.id, true);
+			const order = state.list.find(order => order.ID === payload.id);
 			if (order) {
 				order.quantity++;
 			} else {

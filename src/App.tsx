@@ -39,8 +39,8 @@ const App: React.FC = () => {
 					<Route path='orders' element={<Orders />}/>
 				</Route>
 				<Route
-					path="*"
-					element={<Navigate to="/shop-app" replace />}
+					path='*'
+					element={<Navigate to='/shop-app' replace />}
 				/>
         </Routes>
       </BrowserRouter>
