@@ -14,13 +14,9 @@ const initialState: ordersState = {
 
 const searchOrder = (state: ordersState, id: string, isAdd: boolean) => {
 	const {list} = state;
-	const {length} = list;
-	let i = 0;
-	const id1 = isAdd ? 'ID' : 'id';
-	while (i < length) {
-		if (list[i][id1] === id) return list[i];
-		i++;
-	};
+	const idProperty = isAdd ? 'ID' : 'id';
+	for (let i = 0; i < list.length; i++)
+		if (list[i][idProperty] === id) return list[i];
 	return false;
 }
 
