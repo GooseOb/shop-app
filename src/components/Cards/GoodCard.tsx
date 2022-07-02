@@ -16,8 +16,9 @@ const GoodCard: React.FC<IGood> = (props) => {
 					top: '50%',
 					right: 0
 				}}
+				onClick={() => dispatch(addOrder(props))}
 			>
-				<Add onClick={() => dispatch(addOrder(props))} />
+				<Add />
 			</IconButton>
 		</Card>
 	);

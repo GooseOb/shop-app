@@ -17,8 +17,9 @@ const OrderCard: React.FC<IOrder | IGood> = (props) => {
 					top: '50%',
 					right: 0
 				}}
+				onClick={() => dispatch(removeOrder(props as IOrder))}
 			>
-				<Close onClick={() => dispatch(removeOrder(props as IOrder))} />
+				<Close />
 			</IconButton>
 			{(quantity > 1 &&
 				<Typography variant='body2'>
