@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.71a1b67e.css","mappings":"AAAA,EACC,aAAc,CACd,uBACD,CAEA,KACC,QAAS,CACT,SACD","sources":["style.css"],"sourcesContent":["a {\r\n\tcolor: inherit;\r\n\ttext-decoration: inherit;\r\n}\r\n\r\nbody {\r\n\tmargin: 0;\r\n\tpadding: 0;\r\n}"],"names":[],"sourceRoot":""}
