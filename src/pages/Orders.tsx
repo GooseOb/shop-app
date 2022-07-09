@@ -1,5 +1,5 @@
 import React from 'react';
-import GoodsWithSearch from '../components/GoodsWithSearch';
+import CardsWithSearch from '../components/CardsWithSearch';
 import TotalPrice from '../components/TotalPrice';
 import { useAppSelector } from '../hooks/redux';
 
@@ -9,7 +9,7 @@ const Orders: React.FC = () => {
 	return (
 		<>
 			<TotalPrice />
-			<GoodsWithSearch isOrderPage={true} goods={orders} />
+			<CardsWithSearch isOrderPage={true} goods={orders} />
 		</>
 	);
 }

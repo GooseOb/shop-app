@@ -1,14 +1,12 @@
-import React from 'react';
-import GoodsWithSearch from '../components/GoodsWithSearch';
-import { IGood } from '../models';
+import React, { useContext } from 'react';
+import CardsWithSearch from '../components/CardsWithSearch';
+import GoodsContext from '../context/Goods';
 
-interface Props {
-	goods: IGood[]
-}
+const Main: React.FC = () => {
+	const goods = useContext(GoodsContext);
 
-const Main: React.FC<Props> = ({goods}) => {
 	return (
-		<GoodsWithSearch isOrderPage={false} goods={goods} />
+		<CardsWithSearch isOrderPage={false} goods={goods} />
 	);
 }
 

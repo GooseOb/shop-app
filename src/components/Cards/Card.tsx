@@ -4,11 +4,12 @@ import { IGood } from '../../models';
 
 interface Props extends IGood {
 	amount?: number,
-	children: JSX.Element | JSX.Element[]
+	children: JSX.Element | JSX.Element[] | boolean
 }
 
 const CardComponent: React.FC<Props> = ({children, ...props}) => {
 	const {title, image, price} = props;
+
 	return (
 		<Grid item xs={12} md={3}>
 			<Card>

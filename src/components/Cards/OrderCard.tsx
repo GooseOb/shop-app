@@ -9,6 +9,7 @@ import Card from './Card';
 const OrderCard: React.FC<IOrder | IGood> = (props) => {
 	const {quantity} = props as IOrder;
 	const dispatch = useAppDispatch();
+
 	return (
 		<Card {...props}>
 			<IconButton

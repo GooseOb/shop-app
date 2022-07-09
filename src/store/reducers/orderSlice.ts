@@ -1,22 +1,24 @@
-import { IGood, IOrder } from "../../models";
+import { IGood, IOrder, IOrdersData } from "../../models";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import getRandomValue from "../../getRandomValue";
+import ordersLS from "../../localStorage/ordersLS";
 
-
-interface ordersState {
-	list: IOrder[],
-	totalPrice: number
-}
-
-const initialState: ordersState = {
+const defaultState: IOrdersData = {
 	list: [],
 	totalPrice: 0
 };
+
+const initialState = ordersLS.get() || defaultState;
 
 const ordersReducer = createSlice({
 	name: 'orders',
 	initialState,
 	reducers: {
-		addOrder(state: ordersState, action: PayloadAction<IGood>) {
+		cleanOrders(state: IOrdersData) {
+			Object.assign(state, defaultState);
+			ordersLS.set(state);
+		},
+		addOrder(state: IOrdersData, action: PayloadAction<IGood>) {
 			const payload = {...action.payload as IOrder};
 			const order = state.list.find(order => order.ID === payload.id);
 			if (order) {
@@ -24,18 +26,20 @@ const ordersReducer = createSlice({
 			} else {
 				payload.quantity = 1;
 				payload.ID = payload.id;
-				payload.id = (Math.random()*1e8).toString(36);
+				payload.id = getRandomValue();
 				state.list.push(payload);
-			}
+			};
 			state.totalPrice += payload.price;
+			ordersLS.set(state);
 		},
-		removeOrder(state: ordersState, action: PayloadAction<IOrder>) {
+		removeOrder(state: IOrdersData, action: PayloadAction<IOrder>) {
 			const {id, price, quantity} = action.payload;
 			state.list = state.list.filter(good => good.id !== id);
 			state.totalPrice -= price * quantity;
+			ordersLS.set(state);
 		}
 	}
 });
 
-export const { addOrder, removeOrder } = ordersReducer.actions;
+export const { addOrder, removeOrder, cleanOrders } = ordersReducer.actions;
 export default ordersReducer.reducer;

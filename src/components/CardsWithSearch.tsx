@@ -1,16 +1,16 @@
 import { Grid, Pagination, Stack } from '@mui/material';
 import React, { useState } from 'react';
 import Search from './Search';
-import { IGood } from '../models';
+import { IGood, IOrder } from '../models';
 import GoodCard from './Cards/GoodCard';
 import OrderCard from './Cards/OrderCard';
 
 interface Props {
-	goods: IGood[],
+	goods: IGood[] | IOrder[],
 	isOrderPage: boolean
 }
 
-const GoodsWithSearch: React.FC<Props> = ({goods, isOrderPage}) => {
+const CardsWithSearch: React.FC<Props> = ({goods, isOrderPage}) => {
 	const [searchValue, setSearchValue] = useState('');
 	const [page, setPage] = useState(1);
 
@@ -56,4 +56,4 @@ const GoodsWithSearch: React.FC<Props> = ({goods, isOrderPage}) => {
 	);
 }
 
-export default GoodsWithSearch;
+export default CardsWithSearch;

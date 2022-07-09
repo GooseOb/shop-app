@@ -1,51 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Layout from './components/Layout'
-import Orders from './pages/Orders';
-import Main from './pages/Main';
+import React from 'react';
 import './style.css'
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
-
-interface IResponse {
-	albumId: number,
-	id: number,
-	thumbnailUrl: string,
-	title: string,
-	url: string
-}
+import useRoutes from './hooks/useRoutes';
+import AuthContext from './context/Auth';
+import GoodsContext from './context/Goods';
+import useAuth from './hooks/useAuth';
+import useGoods from './hooks/useGoods';
 
 const App: React.FC = () => {
-	const [goods, setGoods] = useState([]);
+	const auth = useAuth();
+	const goods = useGoods();
+	const routes = useRoutes(auth.isAuth);
 
-	useEffect(() => {
-		if (!goods.length) fetch('https://jsonplaceholder.typicode.com/photos?_end=100')
-			.then((body) => body.json())
-			.then((arr) => arr.map(({id, title, url}: IResponse) => ({
-				id,
-				title,
-				image: url,
-				price: Math.trunc(Math.random()*100)
-			})))
-			.then(setGoods);
-	}, []);
-
-  return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-				<Route path='/shop-app' element={<Layout />}>
-					<Route index element={<Main goods={goods} />}/>
-					<Route path='orders' element={<Orders />}/>
-				</Route>
-				<Route
-					path='*'
-					element={<Navigate to='/shop-app' replace />}
-				/>
-        </Routes>
-      </BrowserRouter>
-    </Provider>
-  );
+	return (
+		<Provider store={store}>
+			<GoodsContext.Provider value={goods}>
+				<AuthContext.Provider value={auth}>
+					<BrowserRouter>
+						{routes}
+					</BrowserRouter>
+				</AuthContext.Provider>
+			</GoodsContext.Provider>
+		</Provider>
+	);
 }
 
 export default App;
