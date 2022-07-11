@@ -71,7 +71,7 @@ const CardsWithSearch: React.FC<Props> = ({goods, isOrderPage, additionalRenderD
 				page={page}
 				onChange={(_, num) => setPage(num)}
 				sx={{
-					marginY: 'auto',
+					margin: 'auto',
 				}}
 			/>
 		</Stack>
@@ -83,20 +83,24 @@ const CardsWithSearch: React.FC<Props> = ({goods, isOrderPage, additionalRenderD
 	return (
 		<>
 			<Search setValue={setSearchValue} />
-			<Stack direction='row'>
-				<Filter setValue={setCategoryId}/>
-				<PriceFilter
-					limits={{maxPriceLimit, minPriceLimit}}
-					limitSetters={{setMaxPriceLimit, setMinPriceLimit}}
-				/>
-				{pagination}
-			</Stack>
+			<Grid container spacing={2}>
+				<Grid item>
+					<Filter setValue={setCategoryId}/>
+				</Grid>
+				<Grid item sx={{flexGrow: 1}}>
+					<PriceFilter
+						limits={{maxPriceLimit, minPriceLimit}}
+						limitSetters={{setMaxPriceLimit, setMinPriceLimit}}
+					/>
+				</Grid>
+				<Grid item sx={{margin: 'auto'}}>
+					{pagination}
+				</Grid>
+			</Grid>
 			<Grid
 				container
 				spacing={2}
-				sx={{
-					marginY: '1rem'
-				}}
+				sx={{marginY: '1rem'}}
 			>
 				{cards}
 			</Grid>
