@@ -1,20 +1,16 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
-import React, { useContext, useState } from 'react';
-import AuthContext from '../../context/Auth';
+import React from 'react';
+import useDialog from '../../hooks/useDialog';
 import SignupSnackbar from './SignupSnackbar';
 
 interface Props {
-	button: (handler: () => void) => JSX.Element
+	button: (handler: () => void) => JSX.Element,
+	login: () => void
 }
 
-const LoginDialog: React.FC<Props> = ({button}) => {
-	const [open, setOpen] = useState(false);
-	const handleOpen = () => setOpen(true);
-	const handleClose = () => setOpen(false);
+const LoginDialog: React.FC<Props> = ({button, login}) => {
+	const {open, buttonOpen, handleClose} = useDialog(button);
 
-	const buttonOpen = button(handleOpen);
-
-	const {login} = useContext(AuthContext);
 	const logIn = () => {
 		handleClose();
 		login();
@@ -23,8 +19,8 @@ const LoginDialog: React.FC<Props> = ({button}) => {
 	return (
 		<>
 			{buttonOpen}
-			<Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title'>
-				<DialogTitle id='form-dialog-title'>Log in</DialogTitle>
+			<Dialog open={open} onClose={handleClose} aria-labelledby='login-dialog-title'>
+				<DialogTitle id='login-dialog-title'>Log in</DialogTitle>
 				<DialogContent>
 					<DialogContentText>Log in to make orders</DialogContentText>
 					<TextField
@@ -36,7 +32,6 @@ const LoginDialog: React.FC<Props> = ({button}) => {
 						type='email'
 					/>
 					<TextField
-						autoFocus
 						fullWidth
 						margin='dense'
 						id='pass'

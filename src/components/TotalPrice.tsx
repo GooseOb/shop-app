@@ -1,10 +1,11 @@
 import { Typography } from '@mui/material';
 import React from 'react';
-import { useAppSelector } from '../hooks/redux';
 
-const TotalPrice: React.FC = () => {
-	const price = useAppSelector(state => state.orders.totalPrice);
+interface Props {
+	value: number
+}
 
+const TotalPrice: React.FC<Props> = ({value}) => {
 	return (
 		<Typography
 			variant='h4'
@@ -12,7 +13,7 @@ const TotalPrice: React.FC = () => {
 				mt: '1rem'
 			}}
 		>
-			Total price: ${price}
+			Total price: ${value}
 		</Typography>
 	);
 }

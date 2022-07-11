@@ -1,11 +1,25 @@
-export interface IGood {
+import { PayloadAction } from "@reduxjs/toolkit"
+
+export interface IAnyGood {
+	isOrder: boolean,
 	id: string,
 	title: string,
-	image: string,
-	price: number
+	description: string,
+	image?: string,
+	images: string[],
+	price: number,
+	category: {
+		id: number,
+		name: string
+	}
 }
 
-export interface IOrder extends IGood {
+export interface IGood extends IAnyGood {
+	isOrder: false
+}
+
+export interface IOrder extends IAnyGood {
+	isOrder: true,
 	quantity: number,
 	ID: string
 }
@@ -18,3 +32,10 @@ export interface IOrdersData {
 export interface IUserData {
 	isAuth: boolean
 }
+
+export interface IOrderPayload<T> {
+	quantity: number
+	good: T
+}
+
+export type IOrderPayloadAction<T> = PayloadAction<IOrderPayload<T>>

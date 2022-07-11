@@ -4,7 +4,9 @@ export const objToLS = <T>(key: string, value: T) => {
 
 export const objFromLS = <T>(key: string) => {
 	const str = localStorage.getItem(key);
-	return str && JSON.parse(str) as T;
+	return str
+		? JSON.parse(str) as T
+		: null;
 };
 
 export const createLS = <T>(key: string) => ({

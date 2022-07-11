@@ -1,27 +1,26 @@
 import React from 'react';
-import { removeOrder } from '../../store/reducers/orderSlice';
+import { decreaseOrder, removeOrder } from '../../store/reducers/orderSlice';
 import { useAppDispatch } from '../../hooks/redux';
-import { Typography, IconButton } from '@mui/material';
-import { Close } from '@mui/icons-material';
-import { IGood, IOrder } from '../../models';
+import { Typography } from '@mui/material';
+import { Close, Remove } from '@mui/icons-material';
+import { IOrder } from '../../models';
 import Card from './Card';
 
-const OrderCard: React.FC<IOrder | IGood> = (props) => {
-	const {quantity} = props as IOrder;
+const OrderCard: React.FC<IOrder> = (props) => {
+	const {quantity} = props;
 	const dispatch = useAppDispatch();
 
 	return (
-		<Card {...props}>
-			<IconButton
-				sx={{
-					position: 'absolute',
-					top: '50%',
-					right: 0
-				}}
-				onClick={() => dispatch(removeOrder(props as IOrder))}
-			>
-				<Close />
-			</IconButton>
+		<Card
+			{...props}
+			buttons={[{
+				icon: <Remove />,
+				clickHandler() {dispatch(decreaseOrder({good: props, quantity: 1}))}
+			}, {
+				icon: <Close />,
+				clickHandler() {dispatch(removeOrder(props))}
+			}]}
+		>
 			{(quantity > 1 &&
 				<Typography variant='body2'>
 					quantity: {quantity}

@@ -1,10 +1,15 @@
 import { TextField } from '@mui/material';
 import React from 'react';
 
-const Search: React.FC<any> = ({setValue}) => {
+interface Props {
+	setValue: React.Dispatch<React.SetStateAction<string>>
+}
+
+const Search: React.FC<Props> = ({setValue}) => {
 	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setValue(e.target.value);
 	};
+
 	return (
 		<TextField
 			label='search'

@@ -1,9 +1,12 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Layout from '../components/Layout'
-import Orders from '../pages/Orders';
-import Main from '../pages/Main';
+import Orders from './Orders';
+import Main from './Main';
+import { useAppSelector } from '../hooks/redux';
 
-const useRoutes = (isAuth: boolean) => {
+const AppRoutes = () => {
+	const isAuth = useAppSelector(state => state.auth.isAuth);
+
 	return (
 		<Routes>
 			<Route path='shop-app' element={<Layout />}>
@@ -18,4 +21,4 @@ const useRoutes = (isAuth: boolean) => {
 	)
 };
 
-export default useRoutes;
+export default AppRoutes;

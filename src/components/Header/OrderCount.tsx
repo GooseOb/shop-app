@@ -1,6 +1,6 @@
 import { Badge } from '@mui/material';
 import React from 'react';
-import { useAppSelector } from '../hooks/redux';
+import { useAppSelector } from '../../hooks/redux';
 
 const OrderCount: React.FC = () => {
 	const orders = useAppSelector(state => state.orders.list);

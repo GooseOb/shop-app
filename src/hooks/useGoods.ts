@@ -1,30 +1,34 @@
 import { useEffect, useState } from "react";
-import getRandomValue from '../getRandomValue';
 import { IGood } from "../models";
 
 interface IResponse {
-	albumId: number,
 	id: number,
-	thumbnailUrl: string,
 	title: string,
-	url: string
+	description: string,
+	price: number,
+	images: string[],
+	category: {
+		id: number,
+		name: string,
+		image: string
+	}
 }
 
+const URL = 'https://api.escuelajs.co/api/v1/products?offset=0&limit=100';
 let isFetched = false;
 
 const useGoods = (): IGood[] => {
 	const [goods, setGoods] = useState<IGood[]>([]);
 
 	useEffect(() => {
-		if (!isFetched) (async () => {
-			const resPromise = await fetch('https://jsonplaceholder.typicode.com/photos?_end=100');
+		if (isFetched) return;
+		(async () => {
+			const resPromise = await fetch(URL);
 			const resArr = await resPromise.json();
-			const goodsArr = resArr.map(({title, url}: IResponse) => ({
-				id: getRandomValue(),
-				title,
-				image: url,
-				price: Math.trunc(Math.random()*100)
-			}));
+			const goodsArr = resArr.map(
+				({id, title, description, price, images, category: c}: IResponse) =>
+				({id, title, description, price, images, category: {id: c.id, name: c.name}, isOrder: false})
+			);
 			setGoods(goodsArr);
 		})();
 		isFetched = true;

@@ -1,7 +1,6 @@
-import { IGood, IOrder, IOrdersData } from "../../models";
+import { IAnyGood, IOrder, IOrderPayloadAction, IOrdersData } from "../../models";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import getRandomValue from "../../getRandomValue";
-import ordersLS from "../../localStorage/ordersLS";
+import { ordersLS } from "../../localStorage";
 
 const defaultState: IOrdersData = {
 	list: [],
@@ -18,28 +17,62 @@ const ordersReducer = createSlice({
 			Object.assign(state, defaultState);
 			ordersLS.set(state);
 		},
-		addOrder(state: IOrdersData, action: PayloadAction<IGood>) {
-			const payload = {...action.payload as IOrder};
-			const order = state.list.find(order => order.ID === payload.id);
+		increaseOrder(state, action: IOrderPayloadAction<IAnyGood>) {
+			let {quantity, good} = action.payload;
+			good = {...good};
+			const {id, price} = good;
+
+			let order = state.list.find(order => order.ID === id);
+
 			if (order) {
-				order.quantity++;
+				const goodsFromApiChanged = order.price !== price;
+				if (goodsFromApiChanged) {
+					Object.assign(state, defaultState);
+					order = undefined;
+				};
+			}
+
+			if (order) {
+				(order as IOrder).quantity += quantity;
 			} else {
-				payload.quantity = 1;
-				payload.ID = payload.id;
-				payload.id = getRandomValue();
-				state.list.push(payload);
+				Object.assign(good, {
+					quantity,
+					ID: id,
+					id: id + 'order',
+					isOrder: true
+				});
+				state.list.push(good as IOrder);
 			};
-			state.totalPrice += payload.price;
+			state.totalPrice += price * quantity;
+
 			ordersLS.set(state);
 		},
-		removeOrder(state: IOrdersData, action: PayloadAction<IOrder>) {
+		decreaseOrder(state, action: IOrderPayloadAction<IOrder>) {
+			const {quantity, good} = action.payload;
+			const {id, price, quantity: startOrderQty} = good;
+
+			const stateOrder = state.list.find(good => good.id === id) as IOrder;
+			stateOrder.quantity -= quantity;
+
+			if (stateOrder.quantity < 1) {
+				state.list = state.list.filter(good => good.id !== id);
+				state.totalPrice -= price * startOrderQty;
+			} else {
+				state.totalPrice -= price * quantity;
+			};
+
+			ordersLS.set(state);
+		},
+		removeOrder(state, action: PayloadAction<IOrder>) {
 			const {id, price, quantity} = action.payload;
+
 			state.list = state.list.filter(good => good.id !== id);
 			state.totalPrice -= price * quantity;
+
 			ordersLS.set(state);
 		}
 	}
 });
 
-export const { addOrder, removeOrder, cleanOrders } = ordersReducer.actions;
+export const { increaseOrder, decreaseOrder, removeOrder, cleanOrders } = ordersReducer.actions;
 export default ordersReducer.reducer;

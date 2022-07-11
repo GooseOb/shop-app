@@ -1,31 +1,22 @@
-import React, { useContext } from 'react';
-import { addOrder } from '../../store/reducers/orderSlice';
-import { useAppDispatch } from '../../hooks/redux';
-import { IconButton } from '@mui/material';
+import React from 'react';
+import { increaseOrder } from '../../store/reducers/orderSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { Add } from '@mui/icons-material';
 import { IGood } from '../../models';
 import Card from './Card';
-import AuthContext from '../../context/Auth';
 
-const GoodCard: React.FC<IGood> = (props) => {
+const GoodCard: React.FC<IGood> = (good) => {
 	const dispatch = useAppDispatch();
-	const {isAuth} = useContext(AuthContext);
+	const isAuth = useAppSelector(state => state.auth.isAuth);
 
 	return (
-		<Card {...props}>
-			{
-				isAuth && <IconButton
-					sx={{
-						position: 'absolute',
-						top: '50%',
-						right: 0
-					}}
-					onClick={() => dispatch(addOrder(props))}
-				>
-					<Add />
-				</IconButton>
-			}
-		</Card>
+		<Card
+			{...good}
+			buttons={isAuth && [{
+				icon: <Add />,
+				clickHandler: () => dispatch(increaseOrder({good, quantity: 1}))
+			}]}
+		/>
 	);
 }
 

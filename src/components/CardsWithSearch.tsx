@@ -1,30 +1,66 @@
 import { Grid, Pagination, Stack } from '@mui/material';
-import React, { useState } from 'react';
-import Search from './Search';
-import { IGood, IOrder } from '../models';
-import GoodCard from './Cards/GoodCard';
-import OrderCard from './Cards/OrderCard';
+import React, { useDeferredValue, useMemo, useState } from 'react';
+import { IAnyGood, IGood, IOrder } from '../models';
+import GoodCard from './cards/GoodCard';
+import OrderCard from './cards/OrderCard';
+import Search from './filters/Search';
+import Filter from './filters/Filter';
+import PriceFilter from './filters/PriceFilter';
 
 interface Props {
-	goods: IGood[] | IOrder[],
-	isOrderPage: boolean
+	goods: IAnyGood[],
+	isOrderPage: boolean,
+	additionalRenderDeps?: any[] | false
 }
 
-const CardsWithSearch: React.FC<Props> = ({goods, isOrderPage}) => {
-	const [searchValue, setSearchValue] = useState('');
-	const [page, setPage] = useState(1);
+type filter = [boolean, (good: IAnyGood) => any];
 
-	const filteredGoods = searchValue
-		? goods.filter(good => good.title.toLowerCase().includes(searchValue.toLowerCase()))
-		: goods;
+const CardsWithSearch: React.FC<Props> = ({goods, isOrderPage, additionalRenderDeps = false}) => {
+	const [searchValue, setSearchValue] = useState('');
+	const [categoryId, setCategoryId] = useState(0);
+	const [maxPriceLimit, setMaxPriceLimit] = useState(0);
+	const [minPriceLimit, setMinPriceLimit] = useState(0);
+	const [page, setPage] = useState(1);
+	const defferedValues = [
+		searchValue,
+		maxPriceLimit,
+		minPriceLimit
+	].map(useDeferredValue);
+
+	const filters: filter[] = [
+		[
+			!!categoryId,
+			({category}) => category.id === categoryId
+		], [
+			!!maxPriceLimit,
+			({price}) => price <= maxPriceLimit
+		], [
+			!!minPriceLimit,
+			({price}) => price >= minPriceLimit
+		], [
+			!!searchValue,
+			({title}) => title.toLowerCase().includes(searchValue.toLowerCase())
+		]
+	];
+
+	let memodeps = defferedValues.concat(goods.length);
+	if (additionalRenderDeps) memodeps = memodeps.concat(additionalRenderDeps);
+
+	const filteredGoods = useMemo(() => {
+		return filters.reduce((acc, [condition, predicate]) => {
+			return condition ? acc.filter(predicate) : acc;
+		}, goods)
+	}, memodeps);
+
+	// const filteredGoods = filters.reduce((acc, [condition, predicate]) => {
+	// 	return condition ? acc.filter(predicate) : acc;
+	// }, goods);
 
 	const CARDS_ON_PAGE = 20;
-	const pageQty = Math.ceil(goods.length / CARDS_ON_PAGE);
+	const pageQty = Math.ceil(filteredGoods.length / CARDS_ON_PAGE);
 	const lastGoodIndex = CARDS_ON_PAGE * page;
 	const firstGoodIndex = lastGoodIndex - CARDS_ON_PAGE;
 	const goodsPiece = filteredGoods.slice(firstGoodIndex, lastGoodIndex);
-
-	const Card = isOrderPage ? OrderCard : GoodCard;
 
 	const pagination = filteredGoods.length > CARDS_ON_PAGE &&
 		<Stack spacing={2}>
@@ -33,15 +69,26 @@ const CardsWithSearch: React.FC<Props> = ({goods, isOrderPage}) => {
 				page={page}
 				onChange={(_, num) => setPage(num)}
 				sx={{
-					marginX: 'auto'
+					marginY: 'auto',
 				}}
 			/>
 		</Stack>
 
+	const cards = isOrderPage
+		? (goodsPiece as IOrder[]).map(good => <OrderCard {...good} />)
+		: (goodsPiece as IGood[]).map(good => <GoodCard {...good} />);
+
 	return (
 		<>
 			<Search setValue={setSearchValue} />
-			{pagination}
+			<Stack direction='row'>
+				<Filter setValue={setCategoryId}/>
+				<PriceFilter
+					limits={{maxPriceLimit, minPriceLimit}}
+					limitSetters={{setMaxPriceLimit, setMinPriceLimit}}
+				/>
+				{pagination}
+			</Stack>
 			<Grid
 				container
 				spacing={2}
@@ -49,7 +96,7 @@ const CardsWithSearch: React.FC<Props> = ({goods, isOrderPage}) => {
 					marginY: '1rem'
 				}}
 			>
-				{goodsPiece.map(good => <Card key={good.id} {...good} />)}
+				{cards}
 			</Grid>
 			{pagination}
 		</>

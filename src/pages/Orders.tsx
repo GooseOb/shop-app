@@ -4,12 +4,16 @@ import TotalPrice from '../components/TotalPrice';
 import { useAppSelector } from '../hooks/redux';
 
 const Orders: React.FC = () => {
-	const orders = useAppSelector(state => state.orders.list);
+	const {list: orders, totalPrice} = useAppSelector(state => state.orders);
 
 	return (
 		<>
-			<TotalPrice />
-			<CardsWithSearch isOrderPage={true} goods={orders} />
+			<TotalPrice value={totalPrice} />
+			<CardsWithSearch
+				isOrderPage={true}
+				goods={orders}
+				additionalRenderDeps={[totalPrice]}
+			/>
 		</>
 	);
 }

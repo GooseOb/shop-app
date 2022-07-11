@@ -1,17 +1,28 @@
 import React from 'react';
-import { Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
-import { IGood } from '../../models';
+import { Button, Card, CardActions, CardContent, CardMedia, Grid, Typography, IconButton } from '@mui/material';
+import { IAnyGood } from '../../models';
+import GoodInfoDialog from '../../dialogs/GoodInfoDialog';
 
-interface Props extends IGood {
+interface Props extends IAnyGood {
 	amount?: number,
-	children: JSX.Element | JSX.Element[] | boolean
+	children?: JSX.Element | JSX.Element[] | false,
+	buttons?: {
+		icon: JSX.Element,
+		clickHandler: () => void
+	}[] | false
 }
 
-const CardComponent: React.FC<Props> = ({children, ...props}) => {
-	const {title, image, price} = props;
+const CardComponent: React.FC<Props> = ({children, buttons, ...props}) => {
+	const {id, title, images: [image], price} = props;
+
+	const actionButtons = buttons && buttons.map(({icon, clickHandler}) =>
+		<IconButton onClick={clickHandler}>
+			{icon}
+		</IconButton>
+	);
 
 	return (
-		<Grid item xs={12} md={3}>
+		<Grid item xs={12} md={3} key={id}>
 			<Card>
 				<CardMedia
 					component='img'
@@ -21,7 +32,6 @@ const CardComponent: React.FC<Props> = ({children, ...props}) => {
 				<CardContent
 					sx={{
 						padding: 1,
-						position: 'relative'
 					}}
 				>
 					<Typography variant='body1'>
@@ -31,7 +41,21 @@ const CardComponent: React.FC<Props> = ({children, ...props}) => {
 						${price}
 					</Typography>
 					{children}
-				</CardContent>
+					</CardContent>
+					<CardActions>
+						<GoodInfoDialog
+							button={(handler) => (
+								<Button
+									sx={{mr: 'auto'}}
+									onClick={handler}
+								>
+									Show more
+								</Button>
+							)}
+							good={props}
+						/>
+						{actionButtons}
+					</CardActions>
 			</Card>
 		</Grid>
 	);
