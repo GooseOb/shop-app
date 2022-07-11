@@ -27,11 +27,8 @@ const CardsWithSearch: React.FC<Props> = ({goods, isOrderPage, additionalRenderD
 		minPriceLimit
 	].map(useDeferredValue);
 
-	const filters: filter[] = [
+	const filtersMemo: filter[] = [
 		[
-			!!categoryId,
-			({category}) => category.id === categoryId
-		], [
 			!!maxPriceLimit,
 			({price}) => price <= maxPriceLimit
 		], [
@@ -42,19 +39,23 @@ const CardsWithSearch: React.FC<Props> = ({goods, isOrderPage, additionalRenderD
 			({title}) => title.toLowerCase().includes(searchValue.toLowerCase())
 		]
 	];
+	const filters: filter[] = [
+		[
+			!!categoryId,
+			({category}) => category.id === categoryId
+		]
+	];
 
 	let memodeps = defferedValues.concat(goods.length);
 	if (additionalRenderDeps) memodeps = memodeps.concat(additionalRenderDeps);
 
-	const filteredGoods = useMemo(() => {
-		return filters.reduce((acc, [condition, predicate]) => {
+	const getFilteredGoods = (filters: filter[], goods: IAnyGood[]) =>
+		filters.reduce((acc, [condition, predicate]) => {
 			return condition ? acc.filter(predicate) : acc;
-		}, goods)
-	}, memodeps);
-
-	// const filteredGoods = filters.reduce((acc, [condition, predicate]) => {
-	// 	return condition ? acc.filter(predicate) : acc;
-	// }, goods);
+		}, goods);
+	const filteredGoods = getFilteredGoods(filters,
+		useMemo(() => getFilteredGoods(filtersMemo, goods), memodeps)
+	);
 
 	const CARDS_ON_PAGE = 20;
 	const pageQty = Math.ceil(filteredGoods.length / CARDS_ON_PAGE);
