@@ -21,7 +21,7 @@ const SignupSnackbar: React.FC<Props> = ({button}) => {
 				onClose={handleClose}
 			>
 				<Alert severity='info'>
-					You don't have to register, fill in the fields with any data
+					You don't have to register, click on log in :)
 				</Alert>
 			</Snackbar>
 		</>

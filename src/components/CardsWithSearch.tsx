@@ -59,7 +59,7 @@ const CardsWithSearch: React.FC<Props> = ({goods, isOrderPage, additionalRenderD
 
 	const CARDS_ON_PAGE = 20;
 	const pageQty = Math.ceil(filteredGoods.length / CARDS_ON_PAGE);
-	if (pageQty < page) setPage(pageQty);
+	if (pageQty && pageQty < page) setPage(pageQty);
 	const lastGoodIndex = CARDS_ON_PAGE * page;
 	const firstGoodIndex = lastGoodIndex - CARDS_ON_PAGE;
 	const goodsPiece = filteredGoods.slice(firstGoodIndex, lastGoodIndex);
