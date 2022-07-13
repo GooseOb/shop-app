@@ -9,7 +9,7 @@ const defaultState: IOrdersData = {
 
 const initialState = ordersLS.get() || defaultState;
 
-const ordersReducer = createSlice({
+const ordersSlice = createSlice({
 	name: 'orders',
 	initialState,
 	reducers: {
@@ -74,5 +74,5 @@ const ordersReducer = createSlice({
 	}
 });
 
-export const { increaseOrder, decreaseOrder, removeOrder, cleanOrders } = ordersReducer.actions;
-export default ordersReducer.reducer;
+export const { increaseOrder, decreaseOrder, removeOrder, cleanOrders } = ordersSlice.actions;
+export default ordersSlice.reducer;

@@ -8,7 +8,7 @@ const defaultState: IUserData = {
 
 const initialState = userDataLS.get() || defaultState;
 
-const ordersReducer = createSlice({
+const ordersSlice = createSlice({
 	name: 'auth',
 	initialState,
 	reducers: {
@@ -23,5 +23,5 @@ const ordersReducer = createSlice({
 	}
 });
 
-export const { login, logout } = ordersReducer.actions;
-export default ordersReducer.reducer;
+export const { login, logout } = ordersSlice.actions;
+export default ordersSlice.reducer;

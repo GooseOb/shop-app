@@ -1,13 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authSlice from "./reducers/authSlice";
-import orderSlice from "./reducers/orderSlice";
-import pageSlice from "./reducers/pageSlice";
+import authReducer from "./reducers/authSlice";
+import filterReducer from "./reducers/filterSlice";
+import goodReducer from "./reducers/goodSlice";
+import orderReducer from "./reducers/orderSlice";
+import pageReducer from "./reducers/pageSlice";
 
 const store = configureStore({
 	reducer: {
-		orders: orderSlice,
-		auth: authSlice,
-		page: pageSlice
+		goods: goodReducer,
+		orders: orderReducer,
+		auth: authReducer,
+		page: pageReducer,
+		filter: filterReducer
 	}
 });
 

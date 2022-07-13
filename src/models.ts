@@ -39,3 +39,8 @@ export interface IOrderPayload<T> {
 }
 
 export type IOrderPayloadAction<T> = PayloadAction<IOrderPayload<T>>
+
+export interface IPopup {
+	isOpen: boolean,
+	handleClose: () => void
+}

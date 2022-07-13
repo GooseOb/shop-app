@@ -1,19 +1,14 @@
 import React from 'react';
-import CardsWithSearch from '../components/CardsWithSearch';
+import Filters from '../components/Filters';
+import OrdersGrid from '../components/OrdersGrid';
 import TotalPrice from '../components/TotalPrice';
-import { useAppSelector } from '../hooks/redux';
 
 const Orders: React.FC = () => {
-	const {list: orders, totalPrice} = useAppSelector(state => state.orders);
-
 	return (
 		<>
-			<TotalPrice value={totalPrice} />
-			<CardsWithSearch
-				isOrderPage={true}
-				goods={orders}
-				additionalRenderDeps={[totalPrice]}
-			/>
+			<TotalPrice />
+			<Filters />
+			<OrdersGrid />
 		</>
 	);
 }

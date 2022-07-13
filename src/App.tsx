@@ -1,24 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './style.css'
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
-import GoodsContext from './context/GoodsContext';
-import useGoods from './hooks/useGoods';
 import AppRoutes from './pages/AppRoutes';
+import fetchGoods from './store/reducers/goodSlice/fetchGoods';
 
 const App: React.FC = () => {
-	const goods = useGoods();
-	
-	console.log(1);
 
+	useEffect(() => {
+		store.dispatch(fetchGoods());
+	}, []);
+	
 	return (
 		<Provider store={store}>
-			<GoodsContext.Provider value={goods}>
-				<BrowserRouter>
-					<AppRoutes />
-				</BrowserRouter>
-			</GoodsContext.Provider>
+			<BrowserRouter>
+				<AppRoutes />
+			</BrowserRouter>
 		</Provider>
 	);
 }

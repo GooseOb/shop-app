@@ -8,11 +8,26 @@ interface Props {
 	good: IAnyGood
 }
 
+const getButton = (
+	title: string,
+	onClick: () => void
+) => (
+	<Button
+		sx={{minWidth: 'unset'}}
+		onClick={onClick}
+	>
+		{title}
+	</Button>
+);
+
 const QtyTextField: React.FC<Props> = ({good}) => {
-	const {isOrder} = good;
 	const [qty, setQty] = useState(1);
-	const payloadAction: IOrderPayload<IAnyGood> = {good, quantity: qty};
 	const dispatch = useAppDispatch();
+
+	const {isOrder} = good;
+
+	const payloadAction: IOrderPayload<IAnyGood> = {good, quantity: qty};
+
 	const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
 		let num = +e.target.value;
 		if (isNaN(num)) return;
@@ -20,6 +35,12 @@ const QtyTextField: React.FC<Props> = ({good}) => {
 		else if (num < 0) num = 0;
 		setQty(num);
 	};
+	const onDecrease = () => dispatch(decreaseOrder(payloadAction as IOrderPayload<IOrder>));
+	const onOrder = () => dispatch(increaseOrder(payloadAction));
+
+	const button = isOrder
+		? getButton('Decrease', onDecrease)
+		: getButton('Order', onOrder);
 
 	return (
 		<TextField
@@ -28,14 +49,7 @@ const QtyTextField: React.FC<Props> = ({good}) => {
 			onChange={onChange}
 			size='small'
 			variant='standard'
-			InputProps={{endAdornment: isOrder
-				? <Button sx={{minWidth: 'unset'}} onClick={() => dispatch(decreaseOrder(payloadAction as IOrderPayload<IOrder>))}>
-					Decrease
-				</Button>
-				: <Button onClick={() => dispatch(increaseOrder(payloadAction))}>
-					Order
-				</Button>
-			}}
+			InputProps={{endAdornment: button}}
 			sx={{
 				width: '12rem',
 				ml: 'auto'

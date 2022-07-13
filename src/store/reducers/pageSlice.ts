@@ -8,7 +8,7 @@ const initialState: IPage = {
 	isLoading: false,
 };
 
-const ordersReducer = createSlice({
+const pageSlice = createSlice({
 	name: 'page',
 	initialState,
 	reducers: {
@@ -18,5 +18,5 @@ const ordersReducer = createSlice({
 	}
 });
 
-export const { setLoading } = ordersReducer.actions;
-export default ordersReducer.reducer;
+export const { setLoading } = pageSlice.actions;
+export default pageSlice.reducer;

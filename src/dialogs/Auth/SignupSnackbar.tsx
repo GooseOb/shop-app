@@ -1,30 +1,21 @@
 import { Alert, Snackbar } from '@mui/material';
-import React, { useState } from 'react';
+import React from 'react';
+import { IPopup } from '../../models';
 
-interface Props {
-	button: (handler: () => void) => JSX.Element
-}
+// interface Props extends IPopup {
+// }
 
-const SignupSnackbar: React.FC<Props> = ({button}) => {
-	const [open, setOpen] = useState(false);
-	const handleOpen = () => setOpen(true);
-	const handleClose = () => setOpen(false);
-
-	const buttonOpen = button(handleOpen);
-
+const SignupSnackbar: React.FC<IPopup> = ({isOpen, handleClose}) => {
 	return (
-		<>
-			{buttonOpen}
-			<Snackbar
-				open={open}
-				autoHideDuration={6000}
-				onClose={handleClose}
-			>
-				<Alert severity='info'>
-					You don't have to register, click on log in :)
-				</Alert>
-			</Snackbar>
-		</>
+		<Snackbar
+			open={isOpen}
+			autoHideDuration={6000}
+			onClose={handleClose}
+		>
+			<Alert severity='info'>
+				You don't have to register, click on log in :)
+			</Alert>
+		</Snackbar>
 	);
 }
 

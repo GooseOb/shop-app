@@ -1,23 +1,26 @@
 import { Select, MenuItem, InputLabel, FormControl, SelectChangeEvent } from '@mui/material';
 import React from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { setCategoryId } from '../../store/reducers/filterSlice';
 
-interface category {
+type eventType = SelectChangeEvent<number | string>;
+
+interface ICategory {
 	id: number | string,
 	name: string,
 	key: string
 }
 
-const categories: category[] = ['All', 'Clothes', 'Electronics', 'Furniture', 'Shoes', 'Others']
+const categories: ICategory[] = ['All', 'Clothes', 'Electronics', 'Furniture', 'Shoes', 'Others']
 	.map((name, i) => ({id: i, name, key: Math.random().toString(32)}));
 categories[0].id = '';
 
-interface Props {
-	setValue: React.Dispatch<React.SetStateAction<number>>
-}
+const CategoryFilter: React.FC = () => {
+	const dispatch = useAppDispatch();
+	const value = useAppSelector(state => state.filter.categoryId) || '';
 
-const Filter: React.FC<Props> = ({setValue}) => {
-	const onChange = (e: SelectChangeEvent<number | string>) => {
-		setValue(+e.target.value || 0);
+	const onChange = (e: eventType) => {
+		dispatch(setCategoryId(+e.target.value || 0));
 	};
 
 	return (
@@ -28,6 +31,7 @@ const Filter: React.FC<Props> = ({setValue}) => {
 				id='category-select'
 				label='Category'
 				variant='standard'
+				value={value}
 				onChange={onChange}
 			>
 				{categories.map(({id, name, key}) => (
@@ -38,4 +42,4 @@ const Filter: React.FC<Props> = ({setValue}) => {
 	);
 }
 
-export default Filter;
+export default CategoryFilter;

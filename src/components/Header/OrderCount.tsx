@@ -3,12 +3,12 @@ import React from 'react';
 import { useAppSelector } from '../../hooks/redux';
 
 const OrderCount: React.FC = () => {
-	const orders = useAppSelector(state => state.orders.list);
+	const ordersQty = useAppSelector(state => state.orders.list.length);
 
 	return (
 		<Badge
 			color='secondary'
-			badgeContent={orders.length}
+			badgeContent={ordersQty}
 		/>
 	);
 }

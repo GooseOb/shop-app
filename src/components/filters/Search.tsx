@@ -1,24 +1,26 @@
 import { TextField } from '@mui/material';
 import React from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { setSearch } from '../../store/reducers/filterSlice';
 
-interface Props {
-	setValue: React.Dispatch<React.SetStateAction<string>>
-}
+type eventType = React.ChangeEvent<HTMLInputElement>;
 
-const Search: React.FC<Props> = ({setValue}) => {
-	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setValue(e.target.value);
+const Search: React.FC = () => {
+	const dispatch = useAppDispatch();
+	const value = useAppSelector(state => state.filter.search);
+
+	const onChange = (e: eventType) => {
+		dispatch(setSearch(e.target.value));
 	};
 
 	return (
 		<TextField
 			label='search'
-			onChange={onChange}
 			fullWidth
 			variant='standard'
-			sx={{
-				mb: '1rem',
-			}}
+			sx={{mb: '1rem'}}
+			value={value}
+			onChange={onChange}
 		/>
 	);
 }
