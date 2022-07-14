@@ -32,12 +32,11 @@ const LoginDialog: React.FC<Props> = ({isOpen, handleClose, login}) => {
 			</DialogContent>
 			<DialogActions>
 				<PopupButton
-					title='Sign up'
-					popup={(props) => (
-						<SignupSnackbar {...props} />
-	 				)}
+					popup={SignupSnackbar}
 					sx={{mr: 'auto'}}
-				/>
+				>
+					Sign up
+				</PopupButton>
 				<Button onClick={handleClose}>
 					Cancel
 				</Button>

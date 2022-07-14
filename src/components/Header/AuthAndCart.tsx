@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 import React from 'react';
-import LoginDialog from '../../dialogs/Auth/LoginDialog';
+import LoginDialog from '../../popups/Auth/LoginDialog';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { login, logout } from '../../store/reducers/authSlice';
 import { cleanOrders } from '../../store/reducers/orderSlice';
@@ -32,13 +32,13 @@ const AuthAndCart: React.FC = () => {
 			</Button>
 		</> :
 		<PopupButton
-			title='Log in'
-			popup={(props) => (
-				<LoginDialog {...props} login={onLoginClick} />
-			)}
+			popup={LoginDialog}
+			props={{login: onLoginClick}}
 			variant='contained'
 			color='secondary'
-		/>
+		>
+			Log in
+		</PopupButton>
 	);
 }
 

@@ -1,12 +1,12 @@
 import React from 'react';
 import { Card, CardActions, CardContent, CardMedia, Grid, Typography, IconButton } from '@mui/material';
 import { IAnyGood } from '../../models';
-import GoodInfoDialog from '../../dialogs/GoodInfoDialog';
+import GoodInfoDialog from '../../popups/GoodInfoDialog';
 import PopupButton from '../PopupButton';
 
 interface Props extends IAnyGood {
 	amount?: number,
-	children?: JSX.Element | JSX.Element[] | false,
+	children?: React.ReactNode,
 	buttons?: {
 		icon: JSX.Element,
 		clickHandler: () => void
@@ -41,12 +41,12 @@ const CardComponent: React.FC<Props> = ({children, buttons, ...good}) => {
 					</CardContent>
 					<CardActions>
 						<PopupButton
-							title='Show more'
-							popup={(props) => (
-								<GoodInfoDialog {...props} good={good} />
-							)}
+							popup={GoodInfoDialog}
+							props={{good}}
 							sx={{mr: 'auto'}}
-						/>
+						>
+							Show more
+						</PopupButton>
 						{actionButtons}
 					</CardActions>
 			</Card>

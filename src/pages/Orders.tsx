@@ -1,7 +1,7 @@
 import React from 'react';
 import Filters from '../components/Filters';
-import OrdersGrid from '../components/OrdersGrid';
-import TotalPrice from '../components/TotalPrice';
+import OrdersGrid from '../components/cardGrids/OrdersGrid';
+import TotalPrice from '../components/cardGrids/TotalPrice';
 
 const Orders: React.FC = () => {
 	return (

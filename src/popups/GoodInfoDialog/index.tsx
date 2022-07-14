@@ -3,6 +3,7 @@ import React from 'react';
 import { useAppSelector } from '../../hooks/redux';
 import { IAnyGood, IPopup } from '../../models';
 import QtyTextField from './QtyTextField';
+import ImageOverlay from '../../components/ImageOverlay';
 
 interface Props extends IPopup {
 	good: IAnyGood
@@ -15,6 +16,21 @@ const GoodInfoDialog: React.FC<Props> = ({isOpen, handleClose, good}) => {
 	const imgData = images.map(url => ({url, rows: 1}));
 	imgData[0].rows = 2;
 
+	const imageList = imgData.map(({url, rows}) => {
+		const img = <img
+			src={url}
+			loading="lazy"
+			width='100%'
+		/>;
+
+		return (
+			<ImageListItem key={url} rows={rows}>
+				<ImageOverlay title={title} img={img} />
+				{img}
+			</ImageListItem>
+		);
+	});
+
 	return (
 		<Dialog open={isOpen} onClose={handleClose} aria-labelledby='good-info-dialog-title'>
 			<DialogTitle id='good-info-dialog-title'>{title}</DialogTitle>
@@ -22,14 +38,7 @@ const GoodInfoDialog: React.FC<Props> = ({isOpen, handleClose, good}) => {
 				<DialogContentText>{description}</DialogContentText>
 
 				<ImageList cols={2} rowHeight={164} variant="quilted">
-					{imgData.map(({url, rows}) => (
-						<ImageListItem key={url} rows={rows}>
-							<img
-								src={url}
-								loading="lazy"
-							/>
-						</ImageListItem>
-					))}
+					{imageList}
 				</ImageList>
 
 				<DialogContentText>

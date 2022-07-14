@@ -1,27 +1,33 @@
 import { PropsOf } from '@emotion/react';
 import { Button } from '@mui/material';
-import React, { useState } from 'react';
+import React from 'react';
+import usePopup from '../hooks/usePopup';
 import { IPopup } from '../models';
 
-type ButtonProps = PropsOf<typeof Button>;
+type buttonType = typeof Button;
+type ButtonProps = PropsOf<buttonType>;
 
 interface Props extends ButtonProps {
-	title: string,
-	popup: (props: IPopup) => JSX.Element,
+	popup: React.FC<any>,
+	props?: object
 }
 
-const PopupButton: React.FC<Props> = ({title, popup, ...props}) => {
-	const [isOpen, setOpen] = useState(false);
+const PopupButton: React.FC<Props> = ({
+	children,
+	popup: Popup,
+	props: popupProps = {},
+	...props
+}) => {
+	const {isOpen, handleOpen, handleClose} = usePopup();
 
-	const handleOpen = () => setOpen(true);
-	const handleClose = () => setOpen(false);
+	const popup: IPopup = {isOpen, handleClose};
 
 	return (
 		<>
 			<Button onClick={handleOpen} {...props}>
-				{title}
+				{children}
 			</Button>
-			{popup({isOpen, handleClose})}
+			<Popup {...popup} {...popupProps} />
 		</>
 	);
 }
