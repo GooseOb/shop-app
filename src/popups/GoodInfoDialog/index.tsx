@@ -1,7 +1,7 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ImageList, ImageListItem } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ImageList, ImageListItem, Stack } from '@mui/material';
 import React from 'react';
 import { useAppSelector } from '../../hooks/redux';
-import { IAnyGood, IPopup } from '../../models';
+import { IAnyGood, IOrder, IPopup } from '../../models';
 import QtyTextField from './QtyTextField';
 import ImageOverlay from '../../components/ImageOverlay';
 
@@ -10,7 +10,7 @@ interface Props extends IPopup {
 }
 
 const GoodInfoDialog: React.FC<Props> = ({isOpen, handleClose, good}) => {
-	const {title, description, images, price, category: {name: category}} = good;
+	const {title, description, images, price, category: {name: category}, isOrder} = good;
 	const isAuth = useAppSelector(state => state.auth.isAuth);
 
 	const imgData = images.map(url => ({url, rows: 1}));
@@ -33,7 +33,18 @@ const GoodInfoDialog: React.FC<Props> = ({isOpen, handleClose, good}) => {
 
 	return (
 		<Dialog open={isOpen} onClose={handleClose} aria-labelledby='good-info-dialog-title'>
-			<DialogTitle id='good-info-dialog-title'>{title}</DialogTitle>
+			<DialogTitle id='good-info-dialog-title'>
+				<Stack direction='row'>
+					<Box sx={{marginY: 'auto'}}>
+						{title}
+					</Box>
+					{isOrder &&
+						<Box sx={{ml: 'auto'}}>
+							quantity: {(good as IOrder).quantity}
+						</Box>
+					}
+				</Stack>
+			</DialogTitle>
 			<DialogContent sx={{pb: 0}}>
 				<DialogContentText>{description}</DialogContentText>
 

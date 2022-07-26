@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Stack } from '@mui/material';
+import { Box, Dialog, DialogContent, DialogTitle, IconButton, Stack } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import { IPopup } from '../../models';
 
@@ -24,8 +24,6 @@ const ImagePopup: React.FC<Props> = ({isOpen, handleClose, img, title}) => {
 			<DialogContent>
 				{img}
 			</DialogContent>
-			<DialogActions>
-			</DialogActions>
 		</Dialog>
 	);
 }
