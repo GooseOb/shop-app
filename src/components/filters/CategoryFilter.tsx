@@ -1,7 +1,7 @@
 import { Select, MenuItem, InputLabel, FormControl, SelectChangeEvent } from '@mui/material';
 import React from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { setCategoryId } from '../../store/reducers/filterSlice';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { setCategoryId } from 'store/reducers/filterSlice';
 
 type eventType = SelectChangeEvent<number | string>;
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardActions, CardContent, CardMedia, Grid, Typography, IconButton } from '@mui/material';
-import { IAnyGood } from '../../models';
-import GoodInfoDialog from '../../popups/GoodInfoDialog';
+import { IAnyGood } from 'models';
+import GoodInfoDialog from 'popups/GoodInfoDialog';
 import PopupButton from '../PopupButton';
 
 interface Props extends IAnyGood {

@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import { IGood } from '../../models';
+import { IGood } from 'models';
 import GoodCard from '../cards/GoodCard';
-import useFilteredGoods from '../../hooks/useFilteredGoods';
+import useFilteredGoods from 'hooks/useFilteredGoods';
 import CommonGrid from './CommonGrid';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { setLoading } from '../../store/reducers/pageSlice';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { setLoading } from 'store/reducers/pageSlice';
 
 const GoodsGrid: React.FC = () => {
 	const {list: goods, isLoading} = useAppSelector(state => state.goods);

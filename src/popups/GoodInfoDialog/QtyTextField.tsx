@@ -1,8 +1,8 @@
 import { Button, TextField } from '@mui/material';
 import React, { useState } from 'react';
-import { useAppDispatch } from '../../hooks/redux';
-import { IOrderPayload, IAnyGood, IOrder } from '../../models';
-import { decreaseOrder, increaseOrder } from '../../store/reducers/orderSlice';
+import { useAppDispatch } from 'hooks/redux';
+import { IOrderPayload, IAnyGood, IOrder } from 'models';
+import { decreaseOrder, increaseOrder } from 'store/reducers/orderSlice';
 
 interface Props {
 	good: IAnyGood

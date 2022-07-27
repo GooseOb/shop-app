@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Dialog, DialogContent, DialogTitle, IconButton, Stack } from '@mui/material';
 import { Close } from '@mui/icons-material';
-import { IPopup } from '../../models';
+import { IPopup } from 'models';
 
 interface Props extends IPopup {
 	title: string,

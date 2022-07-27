@@ -1,6 +1,6 @@
 import React from 'react';
-import { useAppSelector } from '../../../hooks/redux';
-import { setMaxPriceLimit } from '../../../store/reducers/filterSlice';
+import { useAppSelector } from 'hooks/redux';
+import { setMaxPriceLimit } from 'store/reducers/filterSlice';
 import LimitTextField from './LimitTextField';
 
 const MaxLimit: React.FC = () => {

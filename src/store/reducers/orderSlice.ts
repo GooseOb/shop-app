@@ -1,6 +1,6 @@
-import { IAnyGood, IOrder, IOrderPayloadAction, IOrdersData } from "../../models";
+import { IAnyGood, IOrder, IOrderPayloadAction, IOrdersData } from "models";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ordersLS } from "../../localStorage";
+import { ordersLS } from "localStorage";
 
 const defaultState: IOrdersData = {
 	list: [],
@@ -13,7 +13,7 @@ const ordersSlice = createSlice({
 	name: 'orders',
 	initialState,
 	reducers: {
-		cleanOrders(state: IOrdersData) {
+		clearOrders(state: IOrdersData) {
 			Object.assign(state, defaultState);
 			ordersLS.set(state);
 		},
@@ -74,5 +74,5 @@ const ordersSlice = createSlice({
 	}
 });
 
-export const { increaseOrder, decreaseOrder, removeOrder, cleanOrders } = ordersSlice.actions;
+export const { increaseOrder, decreaseOrder, removeOrder, clearOrders } = ordersSlice.actions;
 export default ordersSlice.reducer;

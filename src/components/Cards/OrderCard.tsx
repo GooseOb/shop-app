@@ -1,9 +1,9 @@
 import React from 'react';
-import { decreaseOrder, removeOrder } from '../../store/reducers/orderSlice';
-import { useAppDispatch } from '../../hooks/redux';
+import { decreaseOrder, removeOrder } from 'store/reducers/orderSlice';
+import { useAppDispatch } from 'hooks/redux';
 import { Typography } from '@mui/material';
 import { Close, Remove } from '@mui/icons-material';
-import { IOrder } from '../../models';
+import { IOrder } from 'models';
 import Card from './Card';
 
 const OrderCard: React.FC<IOrder> = (order) => {

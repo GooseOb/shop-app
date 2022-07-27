@@ -1,9 +1,9 @@
 import React from 'react';
 import classes from './ImageOverlay.module.sass';
 import Search from '@mui/icons-material/Search';
-import { IPopup } from '../../models';
-import usePopup from '../../hooks/usePopup';
-import ImagePopup from '../../popups/ImagePopup';
+import { IPopup } from 'models';
+import usePopup from 'hooks/usePopup';
+import ImagePopup from 'popups/ImagePopup';
 
 const iconStyles = {
 	position: 'absolute',

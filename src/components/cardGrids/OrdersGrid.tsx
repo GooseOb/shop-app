@@ -1,8 +1,8 @@
 import React from 'react';
-import { IOrder } from '../../models';
+import { IOrder } from 'models';
 import OrderCard from '../cards/OrderCard';
-import useFilteredGoods from '../../hooks/useFilteredGoods';
-import { useAppSelector } from '../../hooks/redux';
+import useFilteredGoods from 'hooks/useFilteredGoods';
+import { useAppSelector } from 'hooks/redux';
 import CommonGrid from './CommonGrid';
 
 const OrdersGrid: React.FC = () => {

@@ -1,6 +1,6 @@
-import { IUserData } from "../../models";
+import { IUserData } from "models";
 import { createSlice } from "@reduxjs/toolkit";
-import { userDataLS } from "../../localStorage";
+import { userDataLS } from "localStorage";
 
 const defaultState: IUserData = {
 	isAuth: false

@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 import React from 'react';
-import { useAppSelector } from '../../hooks/redux';
+import { useAppSelector } from 'hooks/redux';
 
 const TotalPrice: React.FC = () => {
 	const value = useAppSelector(state => state.orders.totalPrice);

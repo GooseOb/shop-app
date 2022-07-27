@@ -1,9 +1,6 @@
 import { Alert, Snackbar } from '@mui/material';
 import React from 'react';
-import { IPopup } from '../../models';
-
-// interface Props extends IPopup {
-// }
+import { IPopup } from 'models';
 
 const SignupSnackbar: React.FC<IPopup> = ({isOpen, handleClose}) => {
 	return (

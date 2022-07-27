@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
 import React from 'react';
-import PopupButton from '../../components/PopupButton';
-import { IPopup } from '../../models';
+import PopupButton from 'components/PopupButton';
+import { IPopup } from 'models';
 import SignupSnackbar from './SignupSnackbar';
 
 interface Props extends IPopup {

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IGood } from "../../../models";
+import { IGood } from "models";
 import fetchGoods from "./fetchGoods";
 
 interface IResponse {

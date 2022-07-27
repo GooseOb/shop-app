@@ -1,8 +1,8 @@
 import React from 'react';
 import { TextField } from '@mui/material';
-import { useAppDispatch } from '../../../hooks/redux';
+import { useAppDispatch } from 'hooks/redux';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
-import { AppDispatch } from '../../../store';
+import { AppDispatch } from 'store';
 
 type limitSetter = ActionCreatorWithPayload<number, string>;
 

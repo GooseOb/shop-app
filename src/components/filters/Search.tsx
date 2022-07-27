@@ -1,8 +1,8 @@
 import { Close } from '@mui/icons-material';
 import { IconButton, TextField } from '@mui/material';
 import React from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { setSearch } from '../../store/reducers/filterSlice';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { setSearch } from 'store/reducers/filterSlice';
 
 type eventType = React.ChangeEvent<HTMLInputElement>;
 

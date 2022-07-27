@@ -1,8 +1,8 @@
 import React from 'react';
-import { increaseOrder } from '../../store/reducers/orderSlice';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { increaseOrder } from 'store/reducers/orderSlice';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { Add } from '@mui/icons-material';
-import { IGood } from '../../models';
+import { IGood } from 'models';
 import Card from './Card';
 
 const GoodCard: React.FC<IGood> = (good) => {

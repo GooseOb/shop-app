@@ -1,9 +1,9 @@
 import { Button } from '@mui/material';
 import React from 'react';
-import LoginDialog from '../../popups/Auth/LoginDialog';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { login, logout } from '../../store/reducers/authSlice';
-import { cleanOrders } from '../../store/reducers/orderSlice';
+import LoginDialog from 'popups/Auth/LoginDialog';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { login, logout } from 'store/reducers/authSlice';
+import { clearOrders } from 'store/reducers/orderSlice';
 import PopupButton from '../PopupButton';
 import CartBtn from './CartBtn';
 
@@ -12,7 +12,7 @@ const AuthAndCart: React.FC = () => {
 	const dispatch = useAppDispatch();
 
 	const onLogoutClick = () => {
-		dispatch(cleanOrders());
+		dispatch(clearOrders());
 		dispatch(logout());
 	};
 	const onLoginClick = () => {

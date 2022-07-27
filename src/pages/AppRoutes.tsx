@@ -1,8 +1,8 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Layout from '../components/Layout'
+import Layout from 'components/Layout'
 import Orders from './Orders';
 import Main from './Main';
-import { useAppSelector } from '../hooks/redux';
+import { useAppSelector } from 'hooks/redux';
 
 const AppRoutes = () => {
 	const isAuth = useAppSelector(state => state.auth.isAuth);

@@ -1,8 +1,8 @@
 import { PropsOf } from '@emotion/react';
 import { Button } from '@mui/material';
 import React from 'react';
-import usePopup from '../hooks/usePopup';
-import { IPopup } from '../models';
+import usePopup from 'hooks/usePopup';
+import { IPopup } from 'models';
 
 type buttonType = typeof Button;
 type ButtonProps = PropsOf<buttonType>;

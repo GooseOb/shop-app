@@ -1,9 +1,9 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ImageList, ImageListItem, Stack } from '@mui/material';
 import React from 'react';
-import { useAppSelector } from '../../hooks/redux';
-import { IAnyGood, IOrder, IPopup } from '../../models';
+import { useAppSelector } from 'hooks/redux';
+import { IAnyGood, IOrder, IPopup } from 'models';
 import QtyTextField from './QtyTextField';
-import ImageOverlay from '../../components/ImageOverlay';
+import ImageOverlay from 'components/ImageOverlay';
 
 interface Props extends IPopup {
 	good: IAnyGood
