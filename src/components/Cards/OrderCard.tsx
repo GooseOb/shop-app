@@ -1,8 +1,8 @@
 import React from 'react';
-import { decreaseOrder, removeOrder } from 'store/reducers/orderSlice';
+import { decreaseOrder, increaseOrder, removeOrder } from 'store/reducers/orderSlice';
 import { useAppDispatch } from 'hooks/redux';
 import { Typography } from '@mui/material';
-import { Close, Remove } from '@mui/icons-material';
+import { Add, Close, Remove } from '@mui/icons-material';
 import { IOrder } from 'models';
 import Card from './Card';
 
@@ -11,9 +11,14 @@ const OrderCard: React.FC<IOrder> = (order) => {
 	const dispatch = useAppDispatch();
 	const isQtyShow = quantity > 1;
 
-	const buttons = [{
+	const orderPayload = {good: order, quantity: 1};
+
+	let buttons = [{
 		icon: <Remove />,
-		clickHandler() {dispatch(decreaseOrder({good: order, quantity: 1}))}
+		clickHandler() {dispatch(decreaseOrder(orderPayload))}
+	}, {
+		icon: <Add />,
+		clickHandler() {dispatch(increaseOrder(orderPayload))}
 	}, {
 		icon: <Close />,
 		clickHandler() {dispatch(removeOrder(order))}

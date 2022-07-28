@@ -20,8 +20,7 @@ export interface IGood extends IAnyGood {
 
 export interface IOrder extends IAnyGood {
 	isOrder: true,
-	quantity: number,
-	ID: string
+	quantity: number
 }
 
 export interface IOrdersData {

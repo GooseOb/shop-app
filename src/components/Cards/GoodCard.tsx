@@ -14,7 +14,7 @@ const GoodCard: React.FC<IGood> = (good) => {
 			{...good}
 			buttons={isAuth && [{
 				icon: <Add />,
-				clickHandler: () => dispatch(increaseOrder({good, quantity: 1}))
+				clickHandler() {dispatch(increaseOrder({good, quantity: 1}))}
 			}]}
 		/>
 	);

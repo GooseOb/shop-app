@@ -13,16 +13,16 @@ const ordersSlice = createSlice({
 	name: 'orders',
 	initialState,
 	reducers: {
-		clearOrders(state: IOrdersData) {
+		clearOrders(state) {
 			Object.assign(state, defaultState);
+
 			ordersLS.set(state);
 		},
 		increaseOrder(state, action: IOrderPayloadAction<IAnyGood>) {
 			let {quantity, good} = action.payload;
-			good = {...good};
 			const {id, price} = good;
 
-			let order = state.list.find(order => order.ID === id);
+			let order = state.list.find(order => order.id === id);
 
 			if (order) {
 				const goodsFromApiChanged = order.price !== price;
@@ -33,15 +33,14 @@ const ordersSlice = createSlice({
 			}
 
 			if (order) {
-				(order as IOrder).quantity += quantity;
+				order.quantity += quantity;
 			} else {
-				Object.assign(good, {
+				const newOrder: IOrder = {
+					...good,
 					quantity,
-					ID: id,
-					id: id + 'order',
 					isOrder: true
-				});
-				state.list.push(good as IOrder);
+				};
+				state.list.push(newOrder);
 			};
 			state.totalPrice += price * quantity;
 
@@ -51,11 +50,11 @@ const ordersSlice = createSlice({
 			const {quantity, good} = action.payload;
 			const {id, price, quantity: startOrderQty} = good;
 
-			const stateOrder = state.list.find(good => good.id === id) as IOrder;
-			stateOrder.quantity -= quantity;
+			const order = state.list.find(order => order.id === id)!;
+			order.quantity -= quantity;
 
-			if (stateOrder.quantity < 1) {
-				state.list = state.list.filter(good => good.id !== id);
+			if (order.quantity < 1) {
+				state.list = state.list.filter(order => order.id !== id);
 				state.totalPrice -= price * startOrderQty;
 			} else {
 				state.totalPrice -= price * quantity;
@@ -66,7 +65,7 @@ const ordersSlice = createSlice({
 		removeOrder(state, action: PayloadAction<IOrder>) {
 			const {id, price, quantity} = action.payload;
 
-			state.list = state.list.filter(good => good.id !== id);
+			state.list = state.list.filter(order => order.id !== id);
 			state.totalPrice -= price * quantity;
 
 			ordersLS.set(state);
