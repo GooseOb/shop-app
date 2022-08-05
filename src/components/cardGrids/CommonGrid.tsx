@@ -11,25 +11,30 @@ const CARDS_ON_PAGE = 20;
 const CommonGrid: React.FC<Props> = ({children: cards}) => {
 	const [page, setPage] = useState(1);
 
-	let goodsPiece = cards;
-	let pagination = null;
+	if (cards.length < CARDS_ON_PAGE) return (
+		<Grid
+			container
+			spacing={2}
+			sx={{marginY: '1rem'}}
+		>
+			{cards}
+		</Grid>
+	);
 
-	if (cards.length > CARDS_ON_PAGE) {
-		const pageQty = Math.ceil(cards.length / CARDS_ON_PAGE);
+	const pageQty = Math.ceil(cards.length / CARDS_ON_PAGE);
 
-		if (pageQty && pageQty < page) setPage(pageQty);
+	if (pageQty && pageQty < page) setPage(pageQty);
 
-		const firstGoodIndex = (page - 1) * CARDS_ON_PAGE;
-		const lastGoodIndex = firstGoodIndex + CARDS_ON_PAGE;
-		goodsPiece = cards.slice(firstGoodIndex, lastGoodIndex);
+	const firstCardIndex = (page - 1) * CARDS_ON_PAGE;
+	const lastCardIndex = firstCardIndex + CARDS_ON_PAGE;
+	const cardsPart = cards.slice(firstCardIndex, lastCardIndex);
 
-		pagination =
-			<CardPagination
-				page={page}
-				pageQty={pageQty}
-				setPage={setPage}
-			/>;
-	};
+	const pagination =
+		<CardPagination
+			page={page}
+			setPage={setPage}
+			pageQty={pageQty}
+		/>;
 
 	return (
 		<>
@@ -39,7 +44,7 @@ const CommonGrid: React.FC<Props> = ({children: cards}) => {
 				spacing={2}
 				sx={{marginY: '1rem'}}
 			>
-				{goodsPiece}
+				{cardsPart}
 			</Grid>
 			{pagination}
 		</>

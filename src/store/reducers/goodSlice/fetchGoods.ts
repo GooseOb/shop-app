@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-const URL = 'https://api.escuelajs.co/api/v1/products?offset=0&limit=100';
+const QTY = '100';
+const URL = 'https://api.escuelajs.co/api/v1/products?offset=0&limit=' + QTY;
 
 export default createAsyncThunk(
 	'good/fetchAll',

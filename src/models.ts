@@ -1,5 +1,3 @@
-import { PayloadAction } from "@reduxjs/toolkit"
-
 export interface IAnyGood {
 	isOrder: boolean,
 	id: string,
@@ -36,8 +34,6 @@ export interface IOrderPayload<T> {
 	quantity: number
 	good: T
 }
-
-export type IOrderPayloadAction<T> = PayloadAction<IOrderPayload<T>>
 
 export interface IPopup {
 	isOpen: boolean,

@@ -8,10 +8,10 @@ import { setLoading } from 'store/reducers/pageSlice';
 
 const GoodsGrid: React.FC = () => {
 	const {list: goods, isLoading} = useAppSelector(state => state.goods);
-
-	const filteredGoods = useFilteredGoods<IGood>(goods, [goods.length]);
 	const dispatch = useAppDispatch();
 	const setLoad = (loading: boolean) => dispatch(setLoading(loading));
+
+	const filteredGoods = useFilteredGoods<IGood>(goods);
 
 	useEffect(() => {
 		setLoad(isLoading);

@@ -4,10 +4,6 @@ import { useAppDispatch } from 'hooks/redux';
 import { IOrderPayload, IAnyGood, IOrder } from 'models';
 import { decreaseOrder, increaseOrder } from 'store/reducers/orderSlice';
 
-interface Props {
-	good: IAnyGood
-}
-
 const getButton = (
 	title: string,
 	onClick: () => void
@@ -19,6 +15,10 @@ const getButton = (
 		{title}
 	</Button>
 );
+
+interface Props {
+	good: IAnyGood
+}
 
 const QtyTextField: React.FC<Props> = ({good}) => {
 	const [qty, setQty] = useState(1);

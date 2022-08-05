@@ -1,6 +1,8 @@
-import { IAnyGood, IOrder, IOrderPayloadAction, IOrdersData } from "models";
+import { IAnyGood, IOrder, IOrderPayload, IOrdersData } from "models";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ordersLS } from "localStorage";
+
+type IOrderPayloadAction<T> = PayloadAction<IOrderPayload<T>>
 
 const defaultState: IOrdersData = {
 	list: [],

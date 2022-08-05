@@ -7,7 +7,7 @@ interface Props {
 	setPage: (value: React.SetStateAction<number>) => void
 }
 
-const CardPagination: React.FC<Props> = ({page, pageQty, setPage}) => {
+const CardPagination: React.FC<Props> = ({page, setPage, pageQty}) => {
 	return (
 		<Stack spacing={2}>
 			<Pagination

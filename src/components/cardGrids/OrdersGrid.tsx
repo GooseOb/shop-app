@@ -6,9 +6,9 @@ import { useAppSelector } from 'hooks/redux';
 import CommonGrid from './CommonGrid';
 
 const OrdersGrid: React.FC = () => {
-	const {list: orders, totalPrice} = useAppSelector(state => state.orders);
+	const orders = useAppSelector(state => state.orders.list);
 
-	const filteredOrders = useFilteredGoods<IOrder>(orders, [totalPrice]);
+	const filteredOrders = useFilteredGoods<IOrder>(orders);
 
 	return (
 		<CommonGrid>
